@@ -10,8 +10,10 @@ import App from './App.tsx';
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      // TODO: Configure default query options
-      // Examples: refetchOnWindowFocus, retry, staleTime, etc.
+          // TODO: Configure default query options
+          // Examples: refetchOnWindowFocus, retry, staleTime, etc.
+
+
     },
   },
 });
@@ -19,8 +21,10 @@ const queryClient = new QueryClient({
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <App />
-      {/* React Query Devtools - useful for debugging */}
+        <App />
+        {/* React Query Devtools - useful for debugging */}
+
+
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   </StrictMode>
