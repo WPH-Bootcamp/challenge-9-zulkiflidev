@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+//import { useRef } from 'react';
 import type { Movie} from '../types/movie';
 import MovieCard from '../components/MovieCard';
 
@@ -7,7 +7,7 @@ import { usePopularMovies, useNowPlayingMovies  } from '../hooks/useMovies';
 import { Carousel, CarouselContent, 
          CarouselItem, CarouselNext,
          CarouselPrevious
-        } from "../components/ui/Carousel"
+        } from "../components/ui/carousel"
 
 
 import { Button } from '../components/ui/button';
@@ -25,9 +25,9 @@ function Home() {
 
   const { 
     data:nowPlayingData, 
-    isLoading:nowPlayingIsLoading, 
-    isError:nowPlayingIsError, 
-    error:nowPlayingError,  
+//    isLoading:nowPlayingIsLoading, 
+//    isError:nowPlayingIsError, 
+//    error:nowPlayingError,  
     fetchNextPage:nowPlayingFetchNextPage, 
     hasNextPage:nowPlayingHasNextPage, 
     isFetchingNextPage:nowPlayingIsFetchingNextPage 

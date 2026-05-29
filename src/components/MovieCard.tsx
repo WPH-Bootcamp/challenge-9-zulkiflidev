@@ -1,6 +1,8 @@
 import type { Movie } from '../types/movie';
 //import { Link } from 'react-router-dom';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card'
+import { Card 
+         //CardContent, CardDescription, CardHeader, CardTitle 
+       } from '../components/ui/card'
 
 import star from "../../src/assets/star.svg";
 import { Link } from 'react-router-dom';

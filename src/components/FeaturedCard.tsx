@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import VideoPlayIcon from '../assets/icon-videoPlay.svg';
 
 import { usePopularMovies, useMovieDetails  } from '../hooks/useMovies';
@@ -23,15 +23,17 @@ function FeaturedCard({ movieId }: FeaturedCardProps) {
 
   const { data:popularData, 
           isLoading:popularIsLoading, 
-          isError:popularIsError, 
-          error:popularError  } = usePopularMovies();
+          //isError:popularIsError, 
+          //error:popularError  
+          } = usePopularMovies();
 
   //Cegah NaN dengan memberikan default value 0 jika movieId tidak ada
   const numericMovieId = movieId ? Number(movieId) : 0;
   const { data:movieDetailsData, 
         isLoading:movieDetailsIsLoading, 
-        isError:movieDetailsIsError, 
-        error:movieDetailsError  } = useMovieDetails(numericMovieId);          
+        //isError:movieDetailsIsError, 
+        //error:movieDetailsError  
+        } = useMovieDetails(numericMovieId);          
 
   //Tentukan status loading & ketersediaan data sesuai halaman (Home vs Detail)
   const isLoading = movieId ? movieDetailsIsLoading : popularIsLoading;
@@ -107,7 +109,8 @@ function FeaturedCard({ movieId }: FeaturedCardProps) {
                             <Card className="flex flex-col flex-1 justify-center items-center gap-4 bg-black border-white border-0 py-4 px-2 text-center">
                               <img src={VideoCamera} className="w-8 h-8 pt-2 mt-2" />
                               <h3 className="text-neutral-300 text-sm">Genre</h3>
-                              <p className="text-neutral-300 font-bold">{featuredMovie.genres.map((genre) => genre.name).join(', ')}</p>
+                              
+                              <p className="text-neutral-300 font-bold">{featuredMovie.genres?.map((genre: { id: number; name: string }) => genre.name).join(', ') || '-'}</p>
                             </Card>
                             <Card className="flex flex-col flex-1 justify-center items-center gap-4 bg-black border-white border-0 py-4">
                               <img src={EmojiHappy} className="w-8 h-8 pt-2 mt-2" />

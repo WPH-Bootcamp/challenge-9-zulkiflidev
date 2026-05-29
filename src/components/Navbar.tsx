@@ -4,7 +4,7 @@ import MgIcon from '../assets/mg-icon.svg';
 import Logo from '../components/Logo';
 import BurgerMenu from '../assets/burger-menu-icon.svg';
 import { Button } from '../components/ui/button';
-import { motion, useScroll, useTransform } from 'framer-motion';
+//import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
 
