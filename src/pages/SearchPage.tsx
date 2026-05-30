@@ -29,10 +29,10 @@ function SearchPage() {
       
       </div>
 
-      {isLoading && <p className="text-neutral-400">Loading data...</p>}
-
-      {isError && <p className="text-red-500">Error: {error.message}</p>}
+      {isLoading ? <p className="text-neutral-400">Loading...</p> : null}
       
+      {isError ? <p className="text-red-500">{error.message}</p> : null}
+
       {!isLoading && data?.results?.length === 0 && (
 
         
@@ -89,31 +89,6 @@ function SearchPage() {
                     <img src={VideoPlayIcon} className="bg-transparent border-white w-6 h-6 ml-2"/>
                 </Button>
               </div>    
-
-
-              <div className="hidden md:flex md:flex-col px-1 gap-4 mt-5">
-
-                  <h3 className="font-semibold text-neutral-25 truncate text-xl" title={movieItem.title}>
-                    {movieItem.title}
-                  </h3>
-              
-                  <div className="hidden md:flex md:flex-row gap-1">
-                      <img src={Star} alt="Star" />
-                      <p>{movieItem.vote_average.toFixed(1)}/10 </p>
-                  </div>
-
-                  <h3 className="hidden md:text-neutral-400 text-sm line-clamp-3 md:line-clamp-none">{movieItem.overview}</h3>
-
-                  <div className="hidden md:flex md:flex-row gap-4 mt-4 ">
-
-                    <Button className="bg-primary-300 rounded-2xl h-12 w-full md:w-1/4 cursor-pointer">
-                        <p className="text-md text-neutral-25 font-semibold">Watch Trailer</p>                      
-                        <img src={VideoPlayIcon} className="bg-transparent border-white w-6 h-6 ml-2"/>
-
-                    </Button>
-                  </div>
-
-              </div>              
             </div>
 
           ))}
