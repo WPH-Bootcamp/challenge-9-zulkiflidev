@@ -10,6 +10,9 @@ import { Button } from '../components/ui/button'
 import VideoPlayIcon from '../assets/icon-videoPlay.svg';
 
 
+//import MovieFrameIcon from '../assets/movie-frame-icon.svg';
+
+
 function SearchPage() {
   const [searchParams] = useSearchParams();
   const query = searchParams.get('q') || '';
@@ -32,43 +35,85 @@ function SearchPage() {
       
       {!isLoading && data?.results?.length === 0 && (
 
-        <p className="text-neutral-400">Tidak ada film yang ditemukan untuk "{query}".</p>
-      
+        
+        <p className="text-neutral-400"> Data not found for keyword"{query} -- please try another keyword".</p>
+
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-6 
                       pb-24 mt-8">
           {data?.results?.map((movieItem: Movie) => (
 
-            <div className="flex flex-row gap-4 justify-start items-start">
+            <div key={movieItem.id} className="md:flex md:flex-row md:gap-4 md:justify-start md:items-start">
               
-              <div className="flex w-128 h-auto">
-                <MovieCard key={movieItem.id} movie={movieItem} />
-              </div>
+                  {/* Memastikan ukuran gambar sama semua poster movie,
+                  krn ada yang besar dan kecil */}
 
-              <div className="flex flex-col px-1 gap-4 mt-5">
+              <div className="flex flex-row gap-4">
+                <div className="w-32 sm:w-40 md:w-48 shrink-0">
+                  
+                  <MovieCard movie={movieItem} />
+                </div>
+
+                <div className="flex flex-col px-1 gap-4 mt-5">
+
+                    <h3 className="font-semibold text-neutral-25 truncate text-xl" title={movieItem.title}>
+                      {movieItem.title}
+                    </h3>
+                
+                    <div className="flex flex-row gap-1">
+                        <img src={Star} alt="Star" />
+                        <p>{movieItem.vote_average.toFixed(1)}/10 </p>
+                    </div>
+
+                    <h3 className="text-neutral-400 text-sm line-clamp-3 md:line-clamp-none">{movieItem.overview}</h3>
+
+                    <div className="hidden md:flex md:flex-row gap-4 mt-4 ">
+
+                      <Button className="bg-primary-300 rounded-2xl h-12 w-full md:w-1/4 cursor-pointer">
+                          <p className="text-md text-neutral-25 font-semibold">Watch Trailer</p>                      
+                          <img src={VideoPlayIcon} className="bg-transparent border-white w-6 h-6 ml-2"/>
+
+                      </Button>
+                    </div>
+
+                </div>
+
+              </div>  
+              
+              {/* ini untuk tampilan mobile, kan button nya di bawah posternya, ya gitulah.... */}
+              <div className="flex flex-row gap-4 mt-4 sm:w-8/10 md:hidden ">
+                <Button className="bg-primary-300 rounded-2xl h-12 w-full md:w-1/4 cursor-pointer">
+
+                    <p className="text-md text-neutral-25 font-semibold">Watch Trailer</p>                      
+                    <img src={VideoPlayIcon} className="bg-transparent border-white w-6 h-6 ml-2"/>
+                </Button>
+              </div>    
+
+
+              <div className="hidden md:flex md:flex-col px-1 gap-4 mt-5">
 
                   <h3 className="font-semibold text-neutral-25 truncate text-xl" title={movieItem.title}>
                     {movieItem.title}
                   </h3>
               
-                  <div className="flex flex-row gap-1">
+                  <div className="hidden md:flex md:flex-row gap-1">
                       <img src={Star} alt="Star" />
                       <p>{movieItem.vote_average.toFixed(1)}/10 </p>
                   </div>
 
-                  <h3 className="text-neutral-400 text-sm">{movieItem.overview}</h3>
+                  <h3 className="hidden md:text-neutral-400 text-sm line-clamp-3 md:line-clamp-none">{movieItem.overview}</h3>
 
-                  <div className="flex flex-row gap-4 mt-4 ">
+                  <div className="hidden md:flex md:flex-row gap-4 mt-4 ">
 
-                    <Button className="bg-primary-300 rounded-2xl h-12 w-1/4 cursor-pointer">
+                    <Button className="bg-primary-300 rounded-2xl h-12 w-full md:w-1/4 cursor-pointer">
                         <p className="text-md text-neutral-25 font-semibold">Watch Trailer</p>                      
                         <img src={VideoPlayIcon} className="bg-transparent border-white w-6 h-6 ml-2"/>
 
                     </Button>
                   </div>
 
-              </div>
+              </div>              
             </div>
 
           ))}
