@@ -6,6 +6,7 @@ import api from '@/lib/axios';
 
 /**
  * Fungsi untuk mendapatkan Film yang lagi populer...
+ * hanya pae 1 saja
  * @param page 
  */
 export const getPopularMovies = async (page = 1) => {
@@ -25,8 +26,40 @@ export const getPopularMovies = async (page = 1) => {
   }
 };
 
+
+
+
 /**
- * Fungsi untuk mendapatkan Film yang lagi populer...
+ * Fungsi mencari film....
+ * Page One saja, ga usah banyak banyak dah...capek buatnya :D
+ * @param page 
+ */
+export const getSearchMovies = async (query: string, page = 1) => {
+  try{
+    const response = await api.get('/search/movie', {
+      params: {
+        page,query
+      },
+    });
+    
+    //buat debug
+    ////console.log(response.data);
+    return response.data;
+  }
+  catch(error){
+    console.error(error);
+  }
+};
+
+
+
+
+
+
+
+
+/**
+ * Fungsi untuk mendapatkan Now Playing Movies dan bisa diambil per page
  * @param page 
  */
 export const getNowPlayingMovies = async (page: number) => {
@@ -95,6 +128,7 @@ export const movieService = {
   getNowPlayingMovies,
   getMovieDetails,
   getMovieCasts,
+  getSearchMovies
   
   
   //fetchNowPlayingMovies ---> gak perlu ga sih

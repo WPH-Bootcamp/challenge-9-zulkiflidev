@@ -13,7 +13,6 @@ import { Carousel, CarouselContent,
 import { Button } from '../components/ui/button';
 
 import Featured from '../components/FeaturedCard'
-import Footer from '../components/Footer';
 
 function Home() {
 
@@ -62,10 +61,10 @@ function Home() {
           </div>
           <div className="relative overflow-hidden">
               <Carousel className="w-full" opts={{ align: "center" }}>
-                  <CarouselContent className="px-25">
+                  <CarouselContent className="px-4 md:px-25">
                     {
                         popularData?.results?.map((movieItem: Movie) => (
-                          <CarouselItem key={movieItem.id} className="basis-[18%]">
+                          <CarouselItem key={movieItem.id} className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-[18%]">
                             <MovieCard key={movieItem.id} movie={movieItem} />
                           </CarouselItem>
                         )
@@ -75,19 +74,19 @@ function Home() {
                   <CarouselNext className="right-10 peer/next disabled:hidden z-10"/>
               </Carousel>
 
-            <div className="absolute left-0 top-0 h-full w-40
+            <div className="absolute left-0 top-0 h-full w-12
                             md:w-56 bg-gradient-to-r from-black via-black/70 to-transparent pointer-events-none 
                             peer-disabled/prev:opacity-0"></div>
 
-            <div className="absolute right-0 top-0 h-full w-40
+            <div className="absolute right-0 top-0 h-full w-12
                             md:w-56 bg-gradient-to-l from-black via-black/70 to-transparent pointer-events-none 
                             peer-disabled/prev:opacity-0"></div>
           </div>
         </div>
 
         {/* ini now playing movies - 3 baris grid view */}
-        <div className="relative">
-          <div className="text-display-md font-bold text-neutral-25 px-4 md:px-25 pb-4 pt-16">
+        <div className="relative px-4">
+          <div className="text-display-md font-bold text-neutral-25 md:px-25 pb-4 pt-16">
               <h2>New Release</h2>
           </div>
           <div className="grid grid-cols-2 md:px-25 md:grid-cols-4 lg:grid-cols-5 gap-6 pb-24">
@@ -111,7 +110,7 @@ function Home() {
                           bg-gradient-to-t from-[30%] from-black via-black/80 to-transparent pointer-events-none"></div>          
         </div>
 
-        <Footer />
+        
 
         
     </div>

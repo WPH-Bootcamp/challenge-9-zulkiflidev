@@ -69,15 +69,17 @@ function FeaturedCard({ movieId }: FeaturedCardProps) {
               {/* (2) Jika id nya ga ada, maka  ini buat halaman depan pakai data populer dirandom, 
               {/* ....gitulah... saya sih berdasarkan desain figma saja... */}  
               {movieId ? 
-
-                  <div className="absolute bottom-[-25%] w-full left-0 px-25 flex flex-row justify-start items-start gap-8 z-10">
+              
+                <div>
+                  <div className="absolute left-0 bottom-[5%] md:bottom-[-25%] w-full px-2 md:px-25 flex flex-row 
+                                  justify-start items-start md:gap-8 z-10">
                       
-                      <div className="w-60 shrink-0 h-auto">
+                      <div className="px-4 md:px-0 w-4/10 md:w-60 md:shrink-0 md:h-auto">
                           <MovieCard key={featuredMovie.id} movie={featuredMovie} /> 
                       </div>
-
-                      <div className="flex flex-col flex-1 items-start gap-4 mt-4 overflow-hidden">
-                          <h1 className="text-display-md text-neutral-25 font-bold">{featuredMovie.title}</h1>
+                      
+                      <div className="flex flex-col flex-1 items-start gap-2 md:gap-4 mt-4 overflow-hidden">
+                          <h1 className="text-display-sm md:text-display-md text-neutral-25 font-bold">{featuredMovie.title}</h1>
 
                           <div className="flex flex-row gap-4">
                             <img src={CalendarIcon} className="w-6 h-6" />
@@ -90,7 +92,7 @@ function FeaturedCard({ movieId }: FeaturedCardProps) {
                             </p>
                           </div>    
 
-                          <div className="flex flex-row gap-4 justify-between items-center">
+                          <div className="hidden md:flex md:flex-row md:gap-4 md:justify-between md:items-center">
                             <Button className="bg-primary-300 rounded-2xl h-12 w-48 cursor-pointer">
                                 <p className="text-md text-neutral-25 font-semibold">Watch Trailer</p>
                                 <img src={VideoPlayIcon} className="bg-transparent border-white w-6 h-6 ml-2"/>
@@ -100,7 +102,7 @@ function FeaturedCard({ movieId }: FeaturedCardProps) {
                             </Button>
                           </div>
 
-                          <div className="w-full flex flex-row gap-8 bg-transparent border-0">
+                          <div className="hidden w-full md:flex md:flex-row gap-8 bg-transparent border-0">
                             <Card className="flex flex-col flex-1 justify-center items-center gap-4 bg-black border-white border-0 py-4">
                                 <img src={Star} className="w-8 h-8 pt-2 mt-2" />
                                 <h3 className="text-neutral-300 text-sm">Rating</h3>
@@ -111,16 +113,57 @@ function FeaturedCard({ movieId }: FeaturedCardProps) {
                               <h3 className="text-neutral-300 text-sm">Genre</h3>
                               
                               <p className="text-neutral-300 font-bold">{featuredMovie.genres?.map((genre: { id: number; name: string }) => genre.name).join(', ') || '-'}</p>
+                              
                             </Card>
                             <Card className="flex flex-col flex-1 justify-center items-center gap-4 bg-black border-white border-0 py-4">
+
                               <img src={EmojiHappy} className="w-8 h-8 pt-2 mt-2" />
                               <h3 className="text-neutral-300 text-sm">Age Limit</h3>
                               <p className="text-neutral-300 font-bold"> ??? </p>
                             </Card>
                           </div>
-                      </div>
+                      </div>                         
                   </div> 
+
+                  <div className="absolute left-0 bottom-[-5%] w-full px-8  flex flex-row 
+                                  justify-start items-start z-10 md:hidden">
+
+                    <div className="flex flex-row w-full gap-8 md:hidden">
+                      <Button className="bg-primary-300 rounded-2xl h-12 w-8/10 cursor-pointer">
+                          <p className="text-md text-neutral-25 font-semibold">Watch Trailer</p>
+                          <img src={VideoPlayIcon} className="bg-transparent border-white w-6 h-6 ml-2"/>
+                      </Button>
+                      <Button className="bg-black rounded-full w-10 h-10 border-1 border-neutral-900 flex justify-center items-center cursor-pointer">
+                          <img src={HeartIcon} className="w-6 h-6" />                                
+                      </Button>
+                    </div>
+                  </div>
                   
+                  <div className="absolute flex flex-row gap-4 left-0 bottom-[-35%] w-full px-8   
+                                  justify-start items-start z-10 md:hidden">
+
+                    <Card className="flex flex-col flex-1 justify-center items-center gap-4 bg-black border-neutral-800 border-1 py-4">
+                        <img src={Star} className="w-8 h-8 pt-2 mt-2" />
+                        <h3 className="text-neutral-300 text-sm">Rating</h3>
+                        <p className="text-neutral-300 font-bold">{featuredMovie.vote_average.toFixed(1)}/10</p>
+                    </Card>
+                    <Card className="flex flex-col flex-1 justify-center items-center gap-4 bg-black border-neutral-800 border-1 py-4 px-2 text-center">
+                      <img src={VideoCamera} className="w-8 h-8 pt-2 mt-2" />
+                      <h3 className="text-neutral-300 text-sm">Genre</h3>
+                      
+                      {/* --tampilkan beberapa genre 
+                          <p className="text-neutral-300 font-bold">{featuredMovie.genres?.map((genre: { id: number; name: string }) => genre.name).join(', ') || '-'}</p>
+                      */}
+                      <p className="text-neutral-300 font-bold">{featuredMovie.genres?.[0]?.name || '-'}</p>
+                    </Card>
+                    <Card className="flex flex-col flex-1 justify-center items-center gap-4 bg-black border-neutral-800 border-1 py-4">
+                      <img src={EmojiHappy} className="w-8 h-8 pt-2 mt-2" />
+                      <h3 className="text-neutral-300 text-sm">Age Limit</h3>
+                      <p className="text-neutral-300 font-bold"> ??? </p>
+                    </Card>
+                  </div>
+                </div>
+                                 
               :
                                                  
                   <div className="absolute top-2/3 md:bottom-1/10 px-4 md:px-25 flex flex-col gap-4 z-10">
@@ -134,8 +177,6 @@ function FeaturedCard({ movieId }: FeaturedCardProps) {
                           {featuredMovie.overview}
                         </h3>
                     </div>
-
-
                     
                     <div className="w-full md:w-1/3 flex flex-col md:flex-row gap-4 justify-between">
                       <Button className="bg-primary-300 rounded-2xl h-12 w-full md:w-48 cursor-pointer">
@@ -145,7 +186,7 @@ function FeaturedCard({ movieId }: FeaturedCardProps) {
                       <div className="w-full md:w-48">
                         <Link to={`/movie-detail-page/${featuredMovie.id}`}>                   
                           <Button className="bg-button-secondary/50 backdrop-blur-sm 
-                                            border-neutral-900 border-1 rounded-2xl h-12 w-48 cursor-pointer">
+                                            border-neutral-900 border-1 rounded-2xl h-12 w-full md:w-48 cursor-pointer">
                             <p className="text-md text-neutral-25 font-semibold">See Detail</p>
                           </Button>
                         </Link>

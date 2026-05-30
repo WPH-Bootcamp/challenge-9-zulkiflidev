@@ -30,6 +30,36 @@ export const usePopularMovies = (page = 1) => {
 };
 
 
+
+/**
+ * Hook untuk mencari Movies berdasarkan keyword
+ */
+export const useSearchMovies = (query: string, page = 1) => {
+  // TODO: Implement useQuery hook
+  // Hint: Use movieService.getPopularMovies as queryFn
+  return useQuery({
+    
+    queryKey: ['search', 'movie', query, page],
+
+    queryFn: () => movieService.getSearchMovies(query, page),
+    enabled: !!query, // Hanya fetch API jika kata kunci pencarian ada
+    
+    
+    /* --Jika belum diimplementasikan...
+    queryFn: () => {
+      // TODO: Call your movie service function
+      throw new Error('Not implemented');
+    },
+    */
+
+  });
+};
+
+
+
+
+
+
 /**
  * Hook to fetch now playing movies -- fungsi baru
  */

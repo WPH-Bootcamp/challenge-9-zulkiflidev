@@ -37,22 +37,21 @@ function MovieDetailPage() {
 
   return (
     <div>
-      <div className="relative -mt-24">
+      <div className="relative -mt-24 flex flex-col gap-8">
           <FeaturedCard movieId={id} />
 
           {/* Overview */}
-          <div className="mt-40 px-25 text-neutral-200">
+          <div className="mt-45 px-4 text-neutral-200 md:mt-40 md:px-25">
 
             <h2 className="text-display-md font-bold pb-4">Overview</h2>
             <p className="text-lg text-neutral-400">{!movieDetailsIsLoading && movieDetailsData?.overview}</p>
           
           </div>
 
-
-          <div className="mt-10 px-25 text-neutral-200">
-            <h2 className="text-display-md font-bold pb-4">Cast & Crew</h2>
+          <div className="mt-10 md:px-25">
+            <h2 className="px-4 md:px-0 text-display-md font-bold pb-4 text-neutral-25">Cast & Crew</h2>
             
-            <div className="grid grid-cols-3 gap-4 pb-4">
+            <div className="px-4 md:px-0 grid grid-cols-1 md:grid-cols-3 gap-4 pb-4">
 
               {/* Filter Data Cast Member, hanya untuk yang memiliki properti "character" */}
               {/* so, Jadi datanya --> difilter ---> (khusus artisnya saja) ---> dimap ---> buka data ---> tempel di element, gitulah.... */} 
@@ -62,7 +61,7 @@ function MovieDetailPage() {
                   movieCastsData?.cast?.filter((cast: Cast) => 
                       cast.character).map((cast: Cast) => (
                 
-                <div key={cast.id} className="flex flex-row gap-4 py-4 justify-start">
+                <div key={cast.id} className="flex flex-row gap-4 py-1 justify-start">
 
                     {/* Foto profile yang ga ada, jadinya diambil dari ui-avatars.com pake nama inisial jadi ga ngeblank gitu ajah... */}    
                     <img 
@@ -82,7 +81,7 @@ function MovieDetailPage() {
               ))}
             </div>
           </div>
-        <Footer />
+        
       </div>
     </div>
   )

@@ -1,16 +1,13 @@
 import { useEffect, useState } from 'react'
-import { Input } from '../components/ui/input';
-import MgIcon from '../assets/mg-icon.svg';
-import Logo from '../components/Logo';
-import BurgerMenu from '../assets/burger-menu-icon.svg';
-import { Button } from '../components/ui/button';
-//import { motion, useScroll, useTransform } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import BurgerMenu from './BurgerMenu';
+import SearchBar from './SearchBar';
+import MenuList from './MenuList';
 
 
 function Navbar() {
 
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileSearchActive, setIsMobileSearchActive] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -35,35 +32,19 @@ function Navbar() {
                         md:px-16 md:items-center 
                         ${isScrolled ? "backdrop-blur-md" : ""}
                         `}>
-            <div className="flex flex-row gap-16 items-center pt-2 md:px-9">                             
-                <Logo />
-                <div className="hidden md:flex md:flex-row md:gap-16 md:items-center text-white pt-4 md:pb-2 cursor-pointer">
-                    <div>
-                        <Link to="/">
-                            Home
-                        </Link>
-                    </div>
-                    <div>Favorites</div>
-                </div>
+
+            <div className={`${isMobileSearchActive ? "hidden md:block" : "block"}`}>
+              <MenuList />
             </div>
 
-            <div className="hidden md:block flex flex-row relative items-center pt-2 cursor-pointer gap-4">
-                <span className="absolute left-3 top-1/2 pt-2 -translate-y-1/2 text-gray-400">
-                    <img src={MgIcon} className="w-4 h-4 bg-transparent border-white"/>
-                </span>
-                <Input type="text" placeholder="Search Movie" className="bg-white/10  border-transparent/50 text-white pl-9 placeholder:text-neutral-400"></Input>
+            <SearchBar isMobileSearchActive={isMobileSearchActive} onBack={() => setIsMobileSearchActive(false)} />
+            
+            <div className={`${isMobileSearchActive ? "hidden" : "block"}`}>
+            
+              <BurgerMenu onSearchClick={() => setIsMobileSearchActive(true)} />
+            
             </div>
 
-            <div className="flex flex-row gap-4 items-center text-white pt-2 cursor-pointer md:hidden">
-
-                <Button className="bg-transparent">
-                    <img src={MgIcon} className="w-4 h-4 bg-transparent border-white"/>
-                </Button>
-                
-                <Button className="bg-transparent">
-                    <img src={BurgerMenu} className="w-6 h-6"/>
-                </Button>
-            </div>
             
         </nav> 
     </div>

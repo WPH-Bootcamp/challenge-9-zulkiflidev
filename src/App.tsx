@@ -2,7 +2,9 @@ import './index.css';
 import Home from './pages/Home';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar'
+import Footer from './components/Footer'
 import MovieDetailPage from './pages/MovieDetailPage';
+import SearchPage from './pages/SearchPage';
 
 
 
@@ -25,10 +27,15 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/movie-detail-page/:id" element={<MovieDetailPage />} />
 
+            <Route path="/search" element={<SearchPage />} />
+
+
             <Route path="*" element={<div>404 - Halaman tidak ditemukan</div>} />
 
           </Routes>          
         </main>
+
+        <Footer />
       </div>
     </BrowserRouter>
   );
