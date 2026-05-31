@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom'
 import FeaturedCard from '@/components/FeaturedCard'
-import { useMovieDetails, useMovieCasts  } from '../hooks/useMovies';
+import { useMovieDetails, useMovieCasts, useMovieTrailer  } from '../hooks/useMovies';
 import type { Cast  } from '../types/cast';
 
 function MovieDetailPage() {
@@ -27,8 +27,8 @@ function MovieDetailPage() {
   const { data:movieCastsData, 
         isLoading:movieCastsIsLoading, 
         isError:movieCastsIsError, 
-        error:movieCastsError  } = useMovieCasts(numericMovieId);          
-
+        error:movieCastsError  } = useMovieCasts(numericMovieId);       
+        
   // Tampilkan pesan error jika terjadi masalah saat mengambil data
   if (movieCastsIsError) return <div className="p-24 text-white">Oops, terjadi kesalahan: {movieCastsError?.message}</div>;
 

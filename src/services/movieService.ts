@@ -121,6 +121,27 @@ export const getMovieCasts = async (id: number) => {
 };
 
 
+/**
+ * Fungsi untuk mendapatkan Video Trailer
+ * @param page 
+ */
+export const getMovieTrailer = async (id: number) => {
+  try{
+    const response = await api.get(`/movie/${id}/videos`, {
+      
+    });
+    
+    //barangkali berguna buat debug.....
+    //console.log(response.data);
+    return response.data;
+  }
+  catch(error){
+    console.error(error);
+  }
+};
+
+
+
 export const movieService = {
   // TODO: Implement getPopularMovies function
   // Endpoint: GET /movie/popular
@@ -128,7 +149,8 @@ export const movieService = {
   getNowPlayingMovies,
   getMovieDetails,
   getMovieCasts,
-  getSearchMovies
+  getSearchMovies,
+  getMovieTrailer,
   
   
   //fetchNowPlayingMovies ---> gak perlu ga sih

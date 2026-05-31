@@ -104,5 +104,21 @@ export const useMovieCasts = (id: number) => {
 
 
 
+/**
+ * Hook untuk mendapatkan Trailer dari suatu Movie...
+ */
+
+export const useMovieTrailer = (id: number) => {
+  return useQuery({
+
+    queryKey: ['movies', 'videos', id],
+    
+    queryFn: () => movieService.getMovieTrailer(id),
+    enabled: !!id, // Hanya fetch saat id film tersedia
+
+  });
+}
+
+
 // TODO: Add more hooks for different endpoints
 // Examples: useMovieDetails, useSearchMovies, useNowPlayingMovies
