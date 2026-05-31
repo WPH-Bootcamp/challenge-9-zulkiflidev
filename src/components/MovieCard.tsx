@@ -9,13 +9,12 @@ import star from "../../src/assets/star.svg";
 import { Link, useLocation } from 'react-router-dom';
 
 interface MovieCardProps {
-
-  movie: Movie
-
+  movie: Movie;
+  showDetails?: boolean;
 }
 
 
-function MovieCard( { movie } : MovieCardProps) {
+function MovieCard( { movie, showDetails } : MovieCardProps) {
   const location = useLocation();
   
   // Cek apakah sedang di halaman movie-detail-page atau search
@@ -23,6 +22,10 @@ function MovieCard( { movie } : MovieCardProps) {
   const isSearchPage = location.pathname.startsWith('/search');
 
   const posterUrl =  `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+
+  // Tentukan kapan  info judul dan raing itu harus ditampilkan......
+  // initinya di home, rekomendasi --> itu ditampilkan  , tapi kalau icon awal di detail itu ga ditampilkan......
+  const shouldShowDetails = showDetails !== undefined ? showDetails : (!isDetailPage && !isSearchPage);
 
   return (
     <div>
@@ -37,8 +40,8 @@ function MovieCard( { movie } : MovieCardProps) {
           </Link>
         </Card>
 
-        {/* Hanya tampilkan judul & rating jika BUKAN di halaman Detail dan Search */}
-        {(!isDetailPage && !isSearchPage) && (
+        {/* Menampilkan judul & rating berdasarkan prop atau pengecekan halaman */}
+        {shouldShowDetails && (
           
           <div className="flex flex-col px-1 mt-3">
               
