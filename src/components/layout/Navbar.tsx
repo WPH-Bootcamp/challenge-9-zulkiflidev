@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import BurgerMenu from './BurgerMenu';
-import SearchBar from './SearchBar';
+import BurgerMenu from '../BurgerMenu';
+import SearchBar from '../SearchBar';
 
-import MenuList from './MenuList';
+import MenuList from '../MenuList';
 import { Link } from 'react-router-dom';
 
 

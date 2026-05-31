@@ -30,8 +30,8 @@ export const getPopularMovies = async (page = 1) => {
 
 
 /**
- * Fungsi mencari film....
- * Page One saja, ga usah banyak banyak dah...capek buatnya :D
+ * Fungsi mencari film dari keyword
+ * diambil page-1 saja....
  * @param page 
  */
 export const getSearchMovies = async (query: string, page = 1) => {
@@ -184,33 +184,29 @@ export const getMovieTrailer = async (id: number) => {
 
 
 
+
+
 export const movieService = {
   // TODO: Implement getPopularMovies function
   // Endpoint: GET /movie/popular
   getPopularMovies,
-  //fetchNowPlayingMovies ---> gak perlu ga sih
   
-
   // TODO: Implement getNowPlayingMovies function
   // Endpoint: GET /movie/now_playing
-
   getNowPlayingMovies,
 
 
   // TODO: Implement getMovieDetails function
   // Endpoint: GET /movie/{movie_id}
-
   getMovieDetails,
 
   // TODO: Implement searchMovies function
   // Endpoint: GET /search/movie
-
   getSearchMovies,
 
-
+  
   // TODO: Add more endpoints as needed
-  //jadi di bawah ini fungsi lain2nya....ya gitulah...
-
+  //jadi di bawah ini fungsi lain2nya...........
   getMovieCasts,
   getMovieTrailer,
   getMovieRecommendations,
