@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom'
 import FeaturedCard from '@/components/FeaturedCard'
-import { useMovieDetails, useMovieCasts, useMovieTrailer  } from '../hooks/useMovies';
+import { useMovieDetails, useMovieCasts  } from '../hooks/useMovies';
 import type { Cast  } from '../types/cast';
 
 function MovieDetailPage() {
