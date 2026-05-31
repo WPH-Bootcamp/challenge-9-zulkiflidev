@@ -122,6 +122,48 @@ export const getMovieCasts = async (id: number) => {
 
 
 /**
+ * Fungsi untuk mendapatkan Daftar Rekomendasi Movier berdasarkan rating 
+ *  dan seberapa populer suatu movie...
+ * @param page 
+ */
+export const getMovieRecommendations = async (id: number) => {
+  try{
+    const response = await api.get(`/movie/${id}/recommendations`, {
+      
+    });
+    
+    //buat debug, nanti diubah......
+    //console.log(response.data);   //buat test error 
+    return response.data;
+  }
+  catch(error){
+    console.error(error); //error sudah banyak diinspect....belum dirapihin....
+  }
+};
+
+
+
+/**
+ * Fungsi untuk mendapatkan film yang mirip berdasarkan genre dan keyword...
+ */
+export const getMovieSimiliar = async (id: number) => {
+  try{
+    const response = await api.get(`/movie/${id}/similiar`, {
+      
+    });
+    
+    //buat debug, nanti diubah......
+    //console.log(response.data);    
+    return response.data;
+  }
+  catch(error){
+    console.error(error);  
+  }
+};
+
+
+
+/**
  * Fungsi untuk mendapatkan Video Trailer
  * @param page 
  */
@@ -151,6 +193,8 @@ export const movieService = {
   getMovieCasts,
   getSearchMovies,
   getMovieTrailer,
+  getMovieRecommendations,
+  getMovieSimiliar,
   
   
   //fetchNowPlayingMovies ---> gak perlu ga sih

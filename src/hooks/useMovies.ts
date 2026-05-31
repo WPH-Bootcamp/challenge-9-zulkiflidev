@@ -111,9 +111,43 @@ export const useMovieCasts = (id: number) => {
 export const useMovieTrailer = (id: number) => {
   return useQuery({
 
-    queryKey: ['movies', 'videos', id],
+    queryKey: ['movies', 'videos', 'trailer', id],
     
     queryFn: () => movieService.getMovieTrailer(id),
+    enabled: !!id, // Hanya fetch saat id film tersedia
+
+  });
+}
+
+
+/**
+ * Hook untuk mendapatkan Recommendation dari suatu Movie
+ */
+
+export const useMovieRecommendation = (id: number) => {
+  return useQuery({
+
+    queryKey: ['movies', 'videos', 'recommendation', id],
+    
+    queryFn: () => movieService.getMovieRecommendations(id),
+    enabled: !!id, // Hanya fetch saat id film tersedia
+
+  });
+}
+
+
+
+
+/**
+ * Hook untuk mendapatkan Film yang mirip, dari genre dan keyword, gak mirip2 amat sih.......
+ */
+
+export const useMovieSimiliar = (id: number) => {
+  return useQuery({
+
+    queryKey: ['movies', 'videos', 'similiar', 'recommendation', id],
+    
+    queryFn: () => movieService.getMovieSimiliar(id),
     enabled: !!id, // Hanya fetch saat id film tersedia
 
   });

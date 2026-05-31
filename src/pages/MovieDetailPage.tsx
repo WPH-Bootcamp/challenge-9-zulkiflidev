@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom'
-import FeaturedCard from '@/components/FeaturedCard'
+import FeaturedCard from '@/components/FeaturedMovieCard'
 import { useMovieDetails, useMovieCasts  } from '../hooks/useMovies';
+import RecommendationMovie from '../components/RecommendationMovie';
 import type { Cast  } from '../types/cast';
 
 function MovieDetailPage() {
@@ -80,6 +81,8 @@ function MovieDetailPage() {
               ))}
             </div>
           </div>
+
+          <RecommendationMovie movieId={numericMovieId} />
         
       </div>
     </div>

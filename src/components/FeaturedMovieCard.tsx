@@ -2,10 +2,10 @@ import { useMemo, useState } from 'react'
 import VideoPlayIcon from '../assets/icon-videoPlay.svg';
 
 import { usePopularMovies, useMovieDetails, useMovieTrailer  } from '../hooks/useMovies';
-import { Button } from '../components/ui/button';
+import { Button } from './ui/button';
 import { Link } from 'react-router-dom';
 
-import MovieCard from '../components/MovieCard';
+import MovieCard from './MovieCard';
 import { Card } from './ui/card';
 import Star from '../assets/star.svg'
 import VideoCamera from '../assets/video-camera-icon.svg';
@@ -94,42 +94,65 @@ function FeaturedCard({ movieId }: FeaturedCardProps) {
                           <div className="flex flex-row gap-4">
                             <img src={CalendarIcon} className="w-6 h-6" />
                             <p className="text-neutral-200 text-lg">
-                                {featuredMovie.release_date ? new Date(featuredMovie.release_date).toLocaleDateString('id-ID', {
-                                    day: 'numeric',
-                                    month: 'long',
-                                    year: 'numeric'
-                                }) : '-'}
+
+                                {/* format tanggal disesuakn dengan format Indonesia */}
+                                {  featuredMovie.release_date ? 
+                                      new Date(featuredMovie.release_date).toLocaleDateString('id-ID', {
+                                          day: 'numeric',
+                                          month: 'long',
+                                          year: 'numeric'
+                                      }) : '-'}
                             </p>
                           </div>    
 
                           <div className="hidden md:flex md:flex-row md:gap-4 md:justify-between md:items-center">
-                            <Button className="bg-primary-300 rounded-2xl h-12 w-56 cursor-pointer" onClick={() => trailerKey && setShowTrailer(true)}>
+                            <Button className="bg-primary-300 rounded-2xl h-12 w-56 cursor-pointer" 
+                                    onClick={ 
+                                      
+                                      () => trailerKey && setShowTrailer(true)
+
+                                    }>
+                                
                                 <p className="text-md text-neutral-25 font-semibold">Watch Trailer</p>
                                 <img src={VideoPlayIcon} className="bg-transparent border-white w-6 h-6 ml-2"/>
+                            
                             </Button>
-                            <Button className="bg-black rounded-full w-10 h-10 border-1 border-neutral-900 flex justify-center items-center cursor-pointer">
+                            <Button className="bg-black rounded-full w-10 h-10 border-1 border-neutral-900 flex justify-center 
+                                                items-center cursor-pointer">
+                            
                                 <img src={HeartIcon} className="w-6 h-6" />                                
                             </Button>
                           </div>
 
                           <div className="hidden w-full md:flex md:flex-row gap-8 bg-transparent border-0">
                             <Card className="flex flex-col flex-1 justify-center items-center gap-4 bg-black border-white border-0 py-4">
+                                
                                 <img src={Star} className="w-8 h-8 pt-2 mt-2" />
                                 <h3 className="text-neutral-300 text-sm">Rating</h3>
                                 <p className="text-neutral-300 font-bold">{featuredMovie.vote_average.toFixed(1)}/10</p>
                             </Card>
-                            <Card className="flex flex-col flex-1 justify-center items-center gap-4 bg-black border-white border-0 py-4 px-2 text-center">
+                            
+                            <Card className="flex flex-col flex-1   justify-center items-center gap-4 bg-black
+                                              border-white  border-0 py-4 px-2 text-center">
+                              
                               <img src={VideoCamera} className="w-8 h-8 pt-2 mt-2" />
                               <h3 className="text-neutral-300 text-sm">Genre</h3>
                               
-                              <p className="text-neutral-300 font-bold">{featuredMovie.genres?.map((genre: { id: number; name: string }) => genre.name).join(', ') || '-'}</p>
+                              <p className="text-neutral-300 font-bold">
+
+                                {/* --tampilkan beberapa genre  */}
+                                  {featuredMovie.genres?.map((genre: { 
+                                    id: number; name: string }) => genre.name).join(', ') || '-'}
+                              </p>
                               
                             </Card>
                             <Card className="flex flex-col flex-1 justify-center items-center gap-4 bg-black border-white border-0 py-4">
 
+                              {/* buat batasan umur, tapi belum ketemu di mana API nya bagian mananya...*/}
                               <img src={EmojiHappy} className="w-8 h-8 pt-2 mt-2" />
                               <h3 className="text-neutral-300 text-sm">Age Limit</h3>
                               <p className="text-neutral-300 font-bold"> ??? </p>
+
                             </Card>
                           </div>
                       </div>                         
@@ -139,12 +162,24 @@ function FeaturedCard({ movieId }: FeaturedCardProps) {
                                   justify-start items-start z-10 md:hidden">
 
                     <div className="flex flex-row w-full gap-8 md:hidden">
-                      <Button className="bg-primary-300 rounded-2xl h-12 w-8/10 cursor-pointer" onClick={() => trailerKey && setShowTrailer(true)}>
+                      
+                      {/* Video Trailer, KEY nya tinggal dibuka di youtube */}
+                      <Button className="bg-primary-300 rounded-2xl 
+                                         h-12  w-8/10 cursor-pointer" 
+                                         onClick={  
+                                            () => trailerKey && setShowTrailer(true)
+                                         }>
+
                           <p className="text-md text-neutral-25 font-semibold">Watch Trailer</p>
                           <img src={VideoPlayIcon} className="bg-transparent border-white w-6 h-6 ml-2"/>
+                      
                       </Button>
+
+                      {/* Button buat simpan favorite Movie */}
                       <Button className="bg-black rounded-full w-10 h-10 border-1 border-neutral-900 flex justify-center items-center cursor-pointer">
+                          
                           <img src={HeartIcon} className="w-6 h-6" />                                
+                      
                       </Button>
                     </div>
                   </div>
@@ -152,11 +187,14 @@ function FeaturedCard({ movieId }: FeaturedCardProps) {
                   <div className="absolute flex flex-row gap-4 left-0 bottom-[-35%] w-full px-8   
                                   justify-start items-start z-10 md:hidden">
 
-                    <Card className="flex flex-col flex-1 justify-center items-center gap-4 bg-black border-neutral-800 border-1 py-4">
+                    {/* Buat tampilkan rating */} 
+                    <Card className="flex flex-col flex-1 justify-center 
+                                      items-center gap-4 bg-black   border-neutral-800 border-1 py-4">
                         <img src={Star} className="w-8 h-8 pt-2 mt-2" />
                         <h3 className="text-neutral-300 text-sm">Rating</h3>
                         <p className="text-neutral-300 font-bold">{featuredMovie.vote_average.toFixed(1)}/10</p>
                     </Card>
+
                     <Card className="flex flex-col flex-1 justify-center items-center gap-4 bg-black border-neutral-800 border-1 py-4 px-2 text-center">
                       <img src={VideoCamera} className="w-8 h-8 pt-2 mt-2" />
                       <h3 className="text-neutral-300 text-sm">Genre</h3>
@@ -166,10 +204,14 @@ function FeaturedCard({ movieId }: FeaturedCardProps) {
                       */}
                       <p className="text-neutral-300 font-bold">{featuredMovie.genres?.[0]?.name || '-'}</p>
                     </Card>
-                    <Card className="flex flex-col flex-1 justify-center items-center gap-4 bg-black border-neutral-800 border-1 py-4">
+                    
+                    <Card className="flex flex-col flex-1 justify-center items-center gap-4 bg-black 
+                                      border-neutral-800 border-1 py-4">
+                      
                       <img src={EmojiHappy} className="w-8 h-8 pt-2 mt-2" />
                       <h3 className="text-neutral-300 text-sm">Age Limit</h3>
                       <p className="text-neutral-300 font-bold"> ??? </p>
+
                     </Card>
                   </div>
                 </div>
@@ -183,23 +225,35 @@ function FeaturedCard({ movieId }: FeaturedCardProps) {
                         </h1>
                     </div> 
                     <div className="w-full  md:w-1/2  text-neutral-400">
+
                         <h3 className="text-sm">
                           {featuredMovie.overview}
                         </h3>
                     </div>
                     
                     <div className="w-full md:w-auto flex flex-col md:flex-row gap-4">
-                      <Button className="bg-primary-300 rounded-2xl h-12 w-full md:w-56 cursor-pointer" onClick={() => trailerKey && setShowTrailer(true)}>
+
+                      <Button className="bg-primary-300 rounded-2xl h-12 w-full md:w-56 cursor-pointer" 
+                              onClick={() => trailerKey && setShowTrailer(true)}>
+                        
                         <p className="text-md text-neutral-25 font-semibold">Watch Trailer</p>
+                        
                         <img src={VideoPlayIcon} className="bg-transparent border-white w-6 h-6 ml-2"/>
+                      
                       </Button>
+                      
                       <div className="w-full md:w-56">
-                        <Link to={`/movie-detail-page/${featuredMovie.id}`}>                   
+
+                        {/* Link dari tiap poster movie diarahkan ke detail tiap movie jika diklik/ditap */}
+                        <Link to={`/movie-detail-page/${featuredMovie.id}`}>       
+
                           <Button className="bg-button-secondary/50 backdrop-blur-sm 
                                             border-neutral-900 border-1 rounded-2xl h-12 w-full cursor-pointer">
                             <p className="text-md text-neutral-25 font-semibold">See Detail</p>
                           </Button>
+                      
                         </Link>
+                      
                       </div>
                     </div>
                     
@@ -209,7 +263,7 @@ function FeaturedCard({ movieId }: FeaturedCardProps) {
           </div>
 
           {/* Modal untuk YouTube Trailer */}
-          {/* jadi dari API TMDB memang menyediakan trailer berupa key,
+          {/* jadi begini, dari API TMDB memang menyediakan trailer berupa key,
               yang mana key itu merupakan ID Video yang bisa disambungkan ke Youtube....
               
               yaitu:
@@ -226,7 +280,9 @@ function FeaturedCard({ movieId }: FeaturedCardProps) {
 
                 <button
                   onClick={() => setShowTrailer(false)}
-                  className="absolute top-2 right-2 md:top-4 md:right-4 z-10 w-10 h-10 flex items-center justify-center bg-black/50 hover:bg-black/80 text-white rounded-full cursor-pointer transition-colors"
+                  className="absolute top-2 right-2 md:top-4 md:right-4 z-10 w-10 h-10 flex items-center justify-center 
+                             bg-black/50 hover:bg-black/80  text-white rounded-full  cursor-pointer 
+                             transition-colors"
                 >
 
                   <svg xmlns="http://www.w3.org/2000/svg" 

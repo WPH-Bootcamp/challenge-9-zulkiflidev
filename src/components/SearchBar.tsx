@@ -7,7 +7,10 @@ import { Input } from '../components/ui/input';
 interface SearchBarProps {
   isMobileSearchActive?: boolean;
   onBack?: () => void;
+
 }
+
+
 function SearchBar({ isMobileSearchActive, onBack }: SearchBarProps) {
 
   const [query, setQuery] = useState('');
@@ -32,14 +35,18 @@ function SearchBar({ isMobileSearchActive, onBack }: SearchBarProps) {
   };
 
   return (
-    <div className={`md:ml-auto md:mr-2 lg:mr-0 ${isMobileSearchActive ? 'w-full md:w-auto block' : 'hidden md:block'}`}>
+    <div className={`md:ml-auto md:mr-2 lg:mr-0 
+          ${isMobileSearchActive ? 'w-full md:w-auto block' : 'hidden md:block'}`}>
         
         <div className="flex flex-row relative items-center pt-2 cursor-pointer gap-4 w-full">
             
             {isMobileSearchActive && (
 
-                <button onClick={onBack} className="text-white md:hidden flex items-center justify-center">
+                <button className="text-white md:hidden flex 
+                                                  items-center justify-center"
+                        onClick={onBack} >
 
+                    {/* Pakai SVG, nanti mau dipindah ke folder assets */}
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
                     </svg>
@@ -54,13 +61,13 @@ function SearchBar({ isMobileSearchActive, onBack }: SearchBarProps) {
 
             <Input 
                 ref={inputRef}
-                className="bg-white/10 border-transparent/50 text-white pl-9 placeholder:text-neutral-400 w-full"
+                className="bg-white/10 border-transparent/50 text-white pl-9 
+                          placeholder:text-neutral-400  w-full"
                 
                 type="text"                 
                 placeholder="Search Movie" 
                 
                 value={query}
-
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={handleKeyDown}
 
