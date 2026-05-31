@@ -18,13 +18,6 @@ export const usePopularMovies = (page = 1) => {
 
     queryFn: () => movieService.getPopularMovies(page),
     
-    
-    /* --Jika belum diimplementasikan...
-    queryFn: () => {
-      // TODO: Call your movie service function
-      throw new Error('Not implemented');
-    },
-    */
 
   });
 };

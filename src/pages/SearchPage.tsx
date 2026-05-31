@@ -83,11 +83,15 @@ function SearchPage() {
               
               {/* ini untuk tampilan mobile, kan button nya di bawah posternya, ya gitulah.... */}
               <div className="flex flex-row gap-4 mt-4 sm:w-8/10 md:hidden ">
+                
+                
                 <Button className="bg-primary-300 rounded-2xl h-12 w-full md:w-1/4 cursor-pointer">
 
                     <p className="text-md text-neutral-25 font-semibold">Watch Trailer</p>                      
                     <img src={VideoPlayIcon} className="bg-transparent border-white w-6 h-6 ml-2"/>
                 </Button>
+
+
               </div>    
             </div>
 

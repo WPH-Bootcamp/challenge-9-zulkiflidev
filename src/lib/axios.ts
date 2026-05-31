@@ -13,7 +13,7 @@ const api = axios.create({
     "Content-Type": "application/json",
     "Authorization": `Bearer ${import.meta.env.VITE_TMDB_API_TOKEN}`
   },
-
+   
 
 });
 
