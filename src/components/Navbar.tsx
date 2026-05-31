@@ -44,7 +44,6 @@ function Navbar() {
               <BurgerMenu onSearchClick={() => setIsMobileSearchActive(true)} />
             
             </div>
-
             
         </nav> 
     </div>

@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import Footer from '../components/Footer'
 import { useParams } from 'react-router-dom'
 import FeaturedCard from '@/components/FeaturedCard'
 import { useMovieDetails, useMovieCasts  } from '../hooks/useMovies';

@@ -34,10 +34,19 @@ function Home() {
 
 
   //Test 1 ---> apa loading statenya jalan?
-  if (popularIsLoading) return <div>Sedang mengambil data ke TMDB</div>
+  if (popularIsLoading) return (
+    <div className="min-h-screen flex items-center justify-center w-full">
+      <p className="text-neutral-400 text-display-lg">Loading...</p>
+    </div>
+  );
 
   //Test 2 --> Aapa error statenya jalan?
-  if (popularIsError) return <div>Opps, ada Error! Detailnya: {popularError.message} </div>
+  if (popularIsError) return (
+    <div className="min-h-screen flex items-center justify-center w-full">
+      <p className="text-neutral-400 text-display-xl">Error!</p>
+      <p className="text-neutral-400 text-display-lg">{popularError?.message}</p>      
+    </div>
+  );
   
 
   console.log("nowPlayingHasNextPage=", nowPlayingHasNextPage);

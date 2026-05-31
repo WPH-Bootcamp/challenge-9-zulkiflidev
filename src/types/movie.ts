@@ -3,31 +3,7 @@
 // https://developer.themoviedb.org/reference/movie-details
 
 export interface Movie {
-  // TODO: Add movie properties based on TMDB API response
-  // Examples: id, title, overview, poster_path, etc.
-  
-  /*
-    Example response from API --> 1) Popular Movies
-
-    "adult": false,
-    "backdrop_path": "/wMrV8SLne1jHLeYS0lLrA1Tf86P.jpg",
-    "genre_ids": [
-        27,
-        9648
-    ],
-    "id": 1304313,
-    "title": "Lee Cronin's The Mummy",
-    "original_language": "en",
-    "original_title": "Lee Cronin's The Mummy",
-    "overview": "The young daughter of a journalist disappears into the desert without a trace—eight years later, the broken family is shocked when she is returned to them, as what should be a joyful reunion turns into a living nightmare.",
-    "popularity": 710.3831,
-    "poster_path": "/uIb9Tvae5haF0XcQBaPyufmxbb0.jpg",
-    "release_date": "2026-04-15",
-    "softcore": false,
-    "video": false,
-    "vote_average": 8.002,
-    "vote_count": 1020
-  */
+ 
 
     id: number;      
     adult: boolean;
