@@ -2,16 +2,20 @@ import { useMemo, useState } from 'react'
 import VideoPlayIcon from '../assets/icon-videoPlay.svg';
 
 import { usePopularMovies, useMovieDetails, useMovieTrailer  } from '../hooks/useMovies';
+import { useFavoriteStore } from '../store/useFavoriteStore';
 import { Button } from './ui/button';
 import { Link } from 'react-router-dom';
 
 import MovieCard from './MovieCard';
 import { Card } from './ui/card';
 import Star from '../assets/star.svg'
+
 import VideoCamera from '../assets/video-camera-icon.svg';
 import EmojiHappy from '../assets/emoji-happy.svg';
 import CalendarIcon from '../assets/calendar-icon.svg';
 import HeartIcon from '../assets/heart-icon.svg';
+import HeartIconFilled from '../assets/heart-icon-filled.svg';
+import CloseIcon from '../assets/close-icon.svg';
 
 //Interface untuk props
 interface FeaturedCardProps {
@@ -21,7 +25,7 @@ interface FeaturedCardProps {
 //Menangkap props 'movieId' dari parameter
 function FeaturedCard({ movieId }: FeaturedCardProps) {
 
-  // State untuk mengontrol kemunculan pop-up modal YouTube Trailer
+  // untuk menangani state dari pop up youtube
   const [showTrailer, setShowTrailer] = useState(false);
 
   const { data:popularData, 
@@ -46,14 +50,48 @@ function FeaturedCard({ movieId }: FeaturedCardProps) {
   const randomIndex = useMemo(() => Math.floor(Math.random() * 19), []);
   const featuredMovie = movieId ? movieDetailsData : popularData?.results?.[randomIndex];
 
+  // Sambungkan ke Zustand Store.....
+  const { addFavorite, removeFavorite, isFavorite: checkIsFavorite } = useFavoriteStore();
+  const isFavorite = featuredMovie ? checkIsFavorite(featuredMovie.id) : false;
+
   //==Movie Trailer, pakai "useMovieTrailer"      
   const { data:movieTrailerData } = useMovieTrailer(featuredMovie?.id || 0);       
   
   // Cari video trailer dari YouTube
-  const trailerVideo = movieTrailerData?.results?.find((vid: any) => vid.type === 'Trailer' && vid.site === 'YouTube') || movieTrailerData?.results?.[0];
+  //berikut ini, kita filter video, yang sekiaranya cocok buat video trailer, tapi ga jamin juga dapet sih...gitulah...
+  const trailerVideo = movieTrailerData?.results?.find((vid: any) => vid.type === 'Trailer' 
+                       && vid.site === 'YouTube') || movieTrailerData?.results?.[0];
   const trailerKey = trailerVideo?.key;
 
-  if (isLoading || !isDataReady)return <div className="w-full aspect-video max-h-[110vh] bg-neutral-900 animate-pulse"></div>;
+  if (isLoading || !isDataReady) 
+    return (
+      <div className="w-full aspect-video max-h-[110vh] 
+                    bg-neutral-900 animate-pulse">
+
+      </div>);
+
+  
+  // Fungsi untuk menangani klik tombol hati
+  const handleFavoriteClick = () => {
+    
+    if (!featuredMovie) return;
+    
+    if (isFavorite) {
+      removeFavorite(featuredMovie.id);
+    } 
+    else {
+
+      // Simpan info id, judul, keterangan, rating ---> nanti dibuka di favorite page, gitulah....capek...
+      addFavorite({
+
+        id: featuredMovie.id,
+        title: featuredMovie.title,
+        overview: featuredMovie.overview,
+        vote_average: featuredMovie.vote_average, 
+        poster_path: featuredMovie.poster_path
+      });
+    }
+  };
 
   const backdropUrl = `https://image.tmdb.org/t/p/original${featuredMovie?.backdrop_path}`;
 
@@ -67,14 +105,17 @@ function FeaturedCard({ movieId }: FeaturedCardProps) {
                         className = "w-full aspect-[3/4] object-cover object-[center_5%] md:aspect-video md:max-h-[110vh] md:object-top "/>
               
                     {/* Buat tepian bawah featured, biar bisa efek gelap */}
-                    <div className="absolute border-0 bottom-0 left-0 w-full h-1/2 z-1 bg-linear-to-t from-black to-transparent"></div>
+                    <div className="absolute border-0 bottom-0 left-0 w-full h-1/2 
+                                    z-1 bg-linear-to-t from-black to-transparent"></div>
                 
                   </div> 
               </div>
 
               <div className="absolute inset-0 bg-black/40 z-0 pointer-events-none"></div>
 
-              {/* Gini, jadi ada 2 opsi tampilan, yaitu Halaman Depan pakai data popular Movie atau Movie Detail, ini opsinya: */}
+              {/* Jadi ada 2 opsi tampilan, yaitu Halaman Depan pakai data popular Movie 
+                  atau Movie Detail ini opsinya: */}
+              
               {/* (1) Jika id movie aja, maka untuk Detail Movie, jadi bentukan desainnya memang beda */} 
               {/* (2) Jika id nya ga ada, maka  ini buat halaman depan pakai data populer dirandom, 
               {/* ....gitulah... saya sih berdasarkan desain figma saja... */}  
@@ -89,7 +130,8 @@ function FeaturedCard({ movieId }: FeaturedCardProps) {
                       </div>
                       
                       <div className="flex flex-col flex-1 items-start gap-2 md:gap-4 mt-4 overflow-hidden">
-                          <h1 className="text-display-sm md:text-display-md text-neutral-25 font-bold">{featuredMovie.title}</h1>
+                          <h1 className="text-display-sm md:text-display-md 
+                                         text-neutral-25 font-bold">{featuredMovie.title}</h1>
 
                           <div className="flex flex-row gap-4">
                             <img src={CalendarIcon} className="w-6 h-6" />
@@ -107,6 +149,7 @@ function FeaturedCard({ movieId }: FeaturedCardProps) {
 
                           <div className="hidden md:flex md:flex-row md:gap-4 md:justify-between md:items-center">
                             <Button className="bg-primary-300 rounded-2xl h-12 w-56 cursor-pointer" 
+                                    
                                     onClick={ 
                                       
                                       () => trailerKey && setShowTrailer(true)
@@ -117,15 +160,23 @@ function FeaturedCard({ movieId }: FeaturedCardProps) {
                                 <img src={VideoPlayIcon} className="bg-transparent border-white w-6 h-6 ml-2"/>
                             
                             </Button>
-                            <Button className="bg-black rounded-full w-10 h-10 border-1 border-neutral-900 flex justify-center 
-                                                items-center cursor-pointer">
+                            <Button className="bg-black rounded-full w-10 h-10 border-1 border-neutral-900 
+                                                flex justify-center items-center cursor-pointer"
+                                    onClick={handleFavoriteClick}>
                             
-                                <img src={HeartIcon} className="w-6 h-6" />                                
+                                {isFavorite ? (
+                                  <img src={HeartIconFilled} className="w-6 h-6" />
+                                ) 
+                                : 
+                                (
+                                  <img src={HeartIcon} className="w-6 h-6" />                                
+                                )}
                             </Button>
                           </div>
 
                           <div className="hidden w-full md:flex md:flex-row gap-8 bg-transparent border-0">
-                            <Card className="flex flex-col flex-1 justify-center items-center gap-4 bg-black border-white border-0 py-4">
+                            <Card className="flex flex-col flex-1 justify-center items-center gap-4 bg-black 
+                                            border-white border-0 py-4">
                                 
                                 <img src={Star} className="w-8 h-8 pt-2 mt-2" />
                                 <h3 className="text-neutral-300 text-sm">Rating</h3>
@@ -146,9 +197,12 @@ function FeaturedCard({ movieId }: FeaturedCardProps) {
                               </p>
                               
                             </Card>
-                            <Card className="flex flex-col flex-1 justify-center items-center gap-4 bg-black border-white border-0 py-4">
+                            <Card className="flex flex-col flex-1 justify-center items-center gap-4 bg-black 
+                                             border-white border-0 py-4">
 
-                              {/* buat batasan umur, tapi belum ketemu di mana API nya bagian mananya...*/}
+                              {/* buat batasan umur, tapi belum ketemu di tmdb API nya bagian mananya...
+                                  nanti dikerjain bila sempet, duh capeknya.....
+                              */}
                               <img src={EmojiHappy} className="w-8 h-8 pt-2 mt-2" />
                               <h3 className="text-neutral-300 text-sm">Age Limit</h3>
                               <p className="text-neutral-300 font-bold"> ??? </p>
@@ -176,10 +230,15 @@ function FeaturedCard({ movieId }: FeaturedCardProps) {
                       </Button>
 
                       {/* Button buat simpan favorite Movie */}
-                      <Button className="bg-black rounded-full w-10 h-10 border-1 border-neutral-900 flex justify-center items-center cursor-pointer">
+                      <Button className="bg-black rounded-full w-10 h-10 border-1 border-neutral-900 flex justify-center
+                                          items-center cursor-pointer"
+                              onClick={handleFavoriteClick}>
                           
-                          <img src={HeartIcon} className="w-6 h-6" />                                
-                      
+                          {isFavorite ? (
+                            <img src={HeartIconFilled} className="w-6 h-6" />
+                          ) : (
+                            <img src={HeartIcon} className="w-6 h-6" />                                
+                          )}
                       </Button>
                     </div>
                   </div>
@@ -195,13 +254,16 @@ function FeaturedCard({ movieId }: FeaturedCardProps) {
                         <p className="text-neutral-300 font-bold">{featuredMovie.vote_average.toFixed(1)}/10</p>
                     </Card>
 
-                    <Card className="flex flex-col flex-1 justify-center items-center gap-4 bg-black border-neutral-800 border-1 py-4 px-2 text-center">
+                    <Card className="flex flex-col flex-1 justify-center items-center gap-4 bg-black 
+                                     border-neutral-800 border-1 py-4 px-2 text-center">
                       <img src={VideoCamera} className="w-8 h-8 pt-2 mt-2" />
                       <h3 className="text-neutral-300 text-sm">Genre</h3>
                       
                       {/* --tampilkan beberapa genre 
-                          <p className="text-neutral-300 font-bold">{featuredMovie.genres?.map((genre: { id: number; name: string }) => genre.name).join(', ') || '-'}</p>
+                          <p className="text-neutral-300 font-bold">{featuredMovie.genres?.map((genre: { 
+                             id: number; name: string }) => genre.name).join(', ') || '-'}</p>
                       */}
+
                       <p className="text-neutral-300 font-bold">{featuredMovie.genres?.[0]?.name || '-'}</p>
                     </Card>
                     
@@ -285,10 +347,7 @@ function FeaturedCard({ movieId }: FeaturedCardProps) {
                              transition-colors"
                 >
 
-                  <svg xmlns="http://www.w3.org/2000/svg" 
-                       fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                  </svg>
+                  <img src={CloseIcon} className="w-6 h-6" />
                 </button>
 
 

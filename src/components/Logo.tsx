@@ -1,4 +1,4 @@
-import LogoImg from '../assets/logo_bxs_tv.svg'        
+import LogoImg from '../assets/logo_movie_website.svg'        
 
 function Logo() {
   return (

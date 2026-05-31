@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom'
-import FeaturedCard from '@/components/FeaturedMovieCard'
+import FeaturedMovieCard from '@/components/FeaturedMovieCard'
 import { useMovieDetails, useMovieCasts  } from '../hooks/useMovies';
 import RecommendationMovie from '../components/RecommendationMovie';
 import type { Cast  } from '../types/cast';
@@ -11,8 +11,10 @@ function MovieDetailPage() {
 
   // Scroll ke posisi paling atas saat halaman pertama kali dibuka
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [id]); // id dijadikan dependency agar saat navigasi antar film, tetap scroll ke atas
+
+    window.scrollTo(0, 0); //scroll ke paling atas...
+  
+  }, [id]); 
 
   //==Movie Details
   const numericMovieId = id ? Number(id) : 0;
@@ -38,7 +40,8 @@ function MovieDetailPage() {
   return (
     <div>
       <div className="relative -mt-24 flex flex-col gap-8">
-          <FeaturedCard movieId={id} />
+
+          <FeaturedMovieCard movieId={id} />
 
           {/* Overview */}
           <div className="mt-45 px-4 text-neutral-200 md:mt-40 md:px-25">
@@ -54,9 +57,13 @@ function MovieDetailPage() {
             <div className="px-4 md:px-0 grid grid-cols-1 md:grid-cols-3 gap-4 pb-4">
 
               {/* Filter Data Cast Member, hanya untuk yang memiliki properti "character" */}
-              {/* so, Jadi datanya --> difilter ---> (khusus artisnya saja) ---> dimap ---> buka data ---> tempel di element, gitulah.... */} 
-              {/* sehingga yang bagian teknis, gak ditampilin  di sini....jadi khusus artis/pemeran nya saja yang bener-bener main aja */}
-              
+              {/* so, Jadi datanya --> difilter ---> (khusus artisnya saja) ---> dimap 
+                  ---> buka data ---> tempel di element, gitulah.... */} 
+              {/* sehingga yang bagian teknis, gak ditampilin  di sini....
+                  jadi khusus artis/pemeran nya saja yang bener-bener main aja 
+                  capek2....ampun....
+              */}
+                            
               {!movieCastsIsLoading && 
                   movieCastsData?.cast?.filter((cast: Cast) => 
                       cast.character).map((cast: Cast) => (
@@ -65,7 +72,8 @@ function MovieDetailPage() {
 
                     {/* Foto profile yang ga ada, jadinya diambil dari ui-avatars.com pake nama inisial jadi ga ngeblank gitu ajah... */}    
                     <img 
-                      src={cast.profile_path ? `https://image.tmdb.org/t/p/w185${cast.profile_path}` : `https://ui-avatars.com/api/?name=${cast.name}&background=171717&color=737373&size=185`} 
+                      src={cast.profile_path ? `https://image.tmdb.org/t/p/w185${cast.profile_path}` :
+                                               `https://ui-avatars.com/api/?name=${cast.name}&background=171717&color=737373&size=185`} 
                       alt={cast.name} 
                       className="w-15 h-auto object-cover block rounded-lg" />
 
@@ -82,6 +90,7 @@ function MovieDetailPage() {
             </div>
           </div>
 
+          
           <RecommendationMovie movieId={numericMovieId} />
         
       </div>

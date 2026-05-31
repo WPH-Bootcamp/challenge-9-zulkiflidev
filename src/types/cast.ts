@@ -1,3 +1,7 @@
+/**
+ * Ini adalah types untuk menangani daftar artis/pemeran di suatu Movie
+ */
+ 
 export interface Cast {
 
     id: number,
