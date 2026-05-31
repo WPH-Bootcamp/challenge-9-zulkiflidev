@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import MgIcon from '../assets/mg-icon.svg';
+import ArrowLeftIcon from '../assets/arrow-left-icon.svg';
 
 import { useNavigate } from 'react-router-dom';
 import { Input } from '../components/ui/input';
@@ -46,11 +47,7 @@ function SearchBar({ isMobileSearchActive, onBack }: SearchBarProps) {
                                                   items-center justify-center"
                         onClick={onBack} >
 
-                    {/* Pakai SVG, nanti mau dipindah ke folder assets */}
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
-                    </svg>
-                    
+                    <img src={ArrowLeftIcon} className="w-6 h-6" alt="Back" />
                 </button>
             )}
 

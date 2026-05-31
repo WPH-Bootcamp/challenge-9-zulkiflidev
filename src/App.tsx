@@ -1,11 +1,15 @@
 import './index.css';
 import Home from './pages/Home';
+
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar'
+
 import Footer from './components/Footer'
 import MovieDetailPage from './pages/MovieDetailPage';
 import SearchPage from './pages/SearchPage';
 
+
+import FavoriteMoviesPage from './pages/FavoriteMoviesPage';
 
 
 function App() {
@@ -28,6 +32,7 @@ function App() {
             <Route path="/movie-detail-page/:id" element={<MovieDetailPage />} />
 
             <Route path="/search" element={<SearchPage />} />
+            <Route path="/favorite" element={<FavoriteMoviesPage />} />
 
 
             <Route path="*" element={<div>404 - Halaman tidak ditemukan</div>} />

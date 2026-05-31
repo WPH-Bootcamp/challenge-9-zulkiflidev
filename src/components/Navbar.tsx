@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import BurgerMenu from './BurgerMenu';
 import SearchBar from './SearchBar';
+
 import MenuList from './MenuList';
 import { Link } from 'react-router-dom';
 
@@ -34,7 +35,8 @@ function Navbar() {
   useEffect(() => {
 
     if (isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden'; //ga bisa scroll
+      document.body.style.overflow = 'hidden'; //supaya ga bisa scroll
+
     } 
     else {
       document.body.style.overflow = 'auto';
@@ -63,7 +65,7 @@ function Navbar() {
 
             <div className={`${isMobileSearchActive ? "hidden md:block" : "block"}`}>
 
-              {/* Ini menu buat desktop view */}
+              {/* yg Ini menu buat desktop view.... */}
               <MenuList />
             
             </div>
@@ -97,7 +99,15 @@ function Navbar() {
                                   font-medium p-2 hover:bg-neutral-800 
                                   rounded-lg cursor-pointer">
 
-                      Favorites
+                    
+                      <Link to="/favorite" onClick={() => setIsMobileMenuOpen(false)} 
+                                className="text-white text-lg font-medium p-2 
+                                            hover:bg-neutral-800 rounded-lg">
+                        Favorites
+                      </Link>
+
+
+                      
                   </div>
 
               </div>

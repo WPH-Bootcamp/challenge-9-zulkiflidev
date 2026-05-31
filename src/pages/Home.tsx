@@ -12,7 +12,7 @@ import { Carousel, CarouselContent,
 
 import { Button } from '../components/ui/button';
 
-import Featured from '../components/FeaturedMovieCard'
+import FeaturedMovieCard from '../components/FeaturedMovieCard'
 
 function Home() {
 
@@ -63,9 +63,8 @@ function Home() {
         <div className="relative -mt-24">
           
           {/* Featured Image */}
-          <Featured />
+          <FeaturedMovieCard />
 
-          {/* Untuk Navbar */}
         </div>
 
         {/* ini popular movies - horizontal view */}
@@ -98,15 +97,15 @@ function Home() {
 
               </Carousel>
 
-            <div className="absolute left-0 top-0 h-full w-12
-                            md:w-56 bg-gradient-to-r from-black via-black/70 to-transparent 
-                            pointer-events-none 
+            <div className="absolute left-0 top-0 h-full w-12  md:w-56 bg-gradient-to-r from-black 
+                            via-black/70 to-transparent  pointer-events-none  
                             peer-disabled/prev:opacity-0"></div>
 
-            <div className="absolute right-0 top-0 h-full w-12
-                             md:w-56 bg-gradient-to-l from-black via-black/70 to-transparent 
-                             pointer-events-none 
-                            peer-disabled/prev:opacity-0"></div>
+            <div className="absolute right-0 top-0 h-full w-12 md:w-56 
+                            bg-gradient-to-l from-black via-black/70 to-transparent 
+                            pointer-events-none  peer-disabled/prev:opacity-0">
+            </div>
+
           </div>
         </div>
 
@@ -122,8 +121,7 @@ function Home() {
           <div className="grid grid-cols-2 md:px-25 md:grid-cols-4 lg:grid-cols-5 gap-6 pb-24">
               
               {nowPlayingData?.pages?.
-                flatMap(p => p.results
-                  .slice(5))?.map((movieItem) => 
+                flatMap(p => p.results.slice(5))?.map((movieItem) => 
                     (
                         <MovieCard key={movieItem.id} movie={movieItem} />
                     )
@@ -133,22 +131,20 @@ function Home() {
           </div>
 
 
-          <div className="absolute bottom-8 left-0 w-full flex justify-center flex-row justify-center items-center py-8 -mt-8 pb-12">
+          <div className="absolute flex flex-row  bottom-8 left-0 w-full justify-center 
+                         justify-center items-center py-8 -mt-8 pb-12">
               {nowPlayingHasNextPage && (
                 
                 <Button className="text-md z-20"
                         onClick={()=> nowPlayingFetchNextPage()}
-                        disabled={nowPlayingIsFetchingNextPage}  
-                >
+                        disabled={nowPlayingIsFetchingNextPage}>
+
                      {nowPlayingIsFetchingNextPage ? "Loading..." : "Load More"}
 
                 </Button>
 
-
-
               )}
           </div>
-
 
 
           {/* Buat tepian bawah featured, biar bisa efek gelap */}
@@ -158,8 +154,6 @@ function Home() {
           </div>          
         
         </div>
-
-        
 
         
     </div>
