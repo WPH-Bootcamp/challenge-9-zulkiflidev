@@ -1,7 +1,7 @@
-import { useMovieRecommendation } from '../hooks/useMovies';
-import MovieCard from './MovieCard';
+import { useMovieRecommendation } from '../../hooks/useMovies';
+import MovieCard from '../MovieCard';
 
-import type { Movie } from '../types/movie';
+import type { Movie } from '../../types/movie';
 
 interface RecommendationMovieProps {
   movieId: number | string;

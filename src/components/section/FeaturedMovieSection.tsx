@@ -1,21 +1,21 @@
 import { useMemo, useState } from 'react'
-import VideoPlayIcon from '../assets/icon-videoPlay.svg';
+import VideoPlayIcon from '../../assets/icon-videoPlay.svg';
 
-import { usePopularMovies, useMovieDetails, useMovieTrailer  } from '../hooks/useMovies';
-import { useFavoriteStore } from '../store/useFavoriteStore';
-import { Button } from './ui/button';
+import { usePopularMovies, useMovieDetails, useMovieTrailer  } from '../../hooks/useMovies';
+import { useFavoriteStore } from '../../store/useFavoriteStore';
+import { Button } from '../ui/button';
 import { Link } from 'react-router-dom';
 
-import MovieCard from './MovieCard';
-import { Card } from './ui/card';
-import Star from '../assets/star.svg'
+import MovieCard from '../MovieCard';
+import { Card } from '../ui/card';
+import Star from '../../assets/star.svg'
 
-import VideoCamera from '../assets/video-camera-icon.svg';
-import EmojiHappy from '../assets/emoji-happy.svg';
-import CalendarIcon from '../assets/calendar-icon.svg';
-import HeartIcon from '../assets/heart-icon.svg';
-import HeartIconFilled from '../assets/heart-icon-filled.svg';
-import CloseIcon from '../assets/close-icon.svg';
+import VideoCamera from '../../assets/video-camera-icon.svg';
+import EmojiHappy from '../../assets/emoji-happy.svg';
+import CalendarIcon from '../../assets/calendar-icon.svg';
+import HeartIcon from '../../assets/heart-icon.svg';
+import HeartIconFilled from '../../assets/heart-icon-filled.svg';
+import CloseIcon from '../../assets/close-icon.svg';
 
 //Interface untuk props
 interface FeaturedCardProps {
@@ -42,7 +42,7 @@ function FeaturedCard({ movieId }: FeaturedCardProps) {
         //error:movieDetailsError  
         } = useMovieDetails(numericMovieId);          
 
-  //Tentukan status loading & ketersediaan data sesuai halaman (Home vs Detail)
+  //status loading di MovieDetail atau Home (Popular)
   const isLoading = movieId ? movieDetailsIsLoading : popularIsLoading;
   const isDataReady = movieId ? !!movieDetailsData : (!!popularData && popularData.results?.length > 0);
 
@@ -58,7 +58,8 @@ function FeaturedCard({ movieId }: FeaturedCardProps) {
   const { data:movieTrailerData } = useMovieTrailer(featuredMovie?.id || 0);       
   
   // Cari video trailer dari YouTube
-  //berikut ini, kita filter video, yang sekiaranya cocok buat video trailer, tapi ga jamin juga dapet sih...gitulah...
+  //berikut ini, kita filter video, yang sekiaranya cocok buat video trailer,
+  //tapi gak selalu  dapet video ya...
   const trailerVideo = movieTrailerData?.results?.find((vid: any) => vid.type === 'Trailer' 
                        && vid.site === 'YouTube') || movieTrailerData?.results?.[0];
   const trailerKey = trailerVideo?.key;
@@ -79,17 +80,19 @@ function FeaturedCard({ movieId }: FeaturedCardProps) {
     if (isFavorite) {
       removeFavorite(featuredMovie.id);
     } 
-    else {
+    else 
+      {
 
-      // Simpan info id, judul, keterangan, rating ---> nanti dibuka di favorite page, gitulah....capek...
-      addFavorite({
 
-        id: featuredMovie.id,
-        title: featuredMovie.title,
-        overview: featuredMovie.overview,
-        vote_average: featuredMovie.vote_average, 
-        poster_path: featuredMovie.poster_path
-      });
+        // Simpan info id, judul, keterangan, rating ---> nanti dibuka di favorite page.....
+        addFavorite({
+
+          id: featuredMovie.id,
+          title: featuredMovie.title,
+          overview: featuredMovie.overview,
+          vote_average: featuredMovie.vote_average, 
+          poster_path: featuredMovie.poster_path
+        });
     }
   };
 
@@ -116,9 +119,9 @@ function FeaturedCard({ movieId }: FeaturedCardProps) {
               {/* Jadi ada 2 opsi tampilan, yaitu Halaman Depan pakai data popular Movie 
                   atau Movie Detail ini opsinya: */}
               
-              {/* (1) Jika id movie aja, maka untuk Detail Movie, jadi bentukan desainnya memang beda */} 
-              {/* (2) Jika id nya ga ada, maka  ini buat halaman depan pakai data populer dirandom, 
-              {/* ....gitulah... saya sih berdasarkan desain figma saja... */}  
+              {/* (1) Jika id movie aja, maka untuk Detail Movie, jadi bentukan desainnya memang beda... */} 
+              {/* (2) Jika id nya ga ada, maka  ini buat halaman depan pakai data populer dirandom...  */}
+                
               {movieId ? 
               
                 <div>
@@ -201,7 +204,7 @@ function FeaturedCard({ movieId }: FeaturedCardProps) {
                                              border-white border-0 py-4">
 
                               {/* buat batasan umur, tapi belum ketemu di tmdb API nya bagian mananya...
-                                  nanti dikerjain bila sempet, duh capeknya.....
+                                  nanti dikerjain bila sempet.....
                               */}
                               <img src={EmojiHappy} className="w-8 h-8 pt-2 mt-2" />
                               <h3 className="text-neutral-300 text-sm">Age Limit</h3>

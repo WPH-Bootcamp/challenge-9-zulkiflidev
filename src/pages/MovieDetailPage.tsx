@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom'
-import FeaturedMovieCard from '@/components/FeaturedMovieCard'
+import FeaturedMovieSection from '@/components/section/FeaturedMovieSection'
 import { useMovieDetails, useMovieCasts  } from '../hooks/useMovies';
-import RecommendationMovie from '../components/RecommendationMovie';
+import RecommendationMovie from '../components/section/RecommendationMovieSection';
 import type { Cast  } from '../types/cast';
 
 function MovieDetailPage() {
@@ -41,7 +41,7 @@ function MovieDetailPage() {
     <div>
       <div className="relative -mt-24 flex flex-col gap-8">
 
-          <FeaturedMovieCard movieId={id} />
+          <FeaturedMovieSection movieId={id} />
 
           {/* Overview */}
           <div className="mt-45 px-4 text-neutral-200 md:mt-40 md:px-25">
@@ -57,11 +57,9 @@ function MovieDetailPage() {
             <div className="px-4 md:px-0 grid grid-cols-1 md:grid-cols-3 gap-4 pb-4">
 
               {/* Filter Data Cast Member, hanya untuk yang memiliki properti "character" */}
-              {/* so, Jadi datanya --> difilter ---> (khusus artisnya saja) ---> dimap 
-                  ---> buka data ---> tempel di element, gitulah.... */} 
-              {/* sehingga yang bagian teknis, gak ditampilin  di sini....
-                  jadi khusus artis/pemeran nya saja yang bener-bener main aja 
-                  capek2....ampun....
+              {/* jadi data yang ditampilkan khusus Artis/Pemeran saja ya..... */} 
+              {/* sehingga yang krew, bagian teknis, gak ditampilin  di sini....
+                  
               */}
                             
               {!movieCastsIsLoading && 

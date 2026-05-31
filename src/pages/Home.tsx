@@ -12,7 +12,7 @@ import { Carousel, CarouselContent,
 
 import { Button } from '../components/ui/button';
 
-import FeaturedMovieCard from '../components/FeaturedMovieCard'
+import FeaturedMovieSection from '../components/section/FeaturedMovieSection'
 
 function Home() {
 
@@ -63,7 +63,7 @@ function Home() {
         <div className="relative -mt-24">
           
           {/* Featured Image */}
-          <FeaturedMovieCard />
+          <FeaturedMovieSection />
 
         </div>
 
