@@ -1,14 +1,15 @@
 import { Button } from '../components/ui/button';
 import BurgerMenuIcon from '../assets/burger-menu-icon.svg';
 import MgIcon from '../assets/mg-icon.svg';
+import CloseIcon from '../assets/close-icon.svg';
 
 
 interface BurgerMenuProps {
   onSearchClick?: () => void;
   onMenuClick?: () => void;
-
+  isOpen?: boolean;
 }
-function BurgerMenu({ onSearchClick, onMenuClick }: BurgerMenuProps) {
+function BurgerMenu({ onSearchClick, onMenuClick, isOpen }: BurgerMenuProps) {
   
   return (    
     <div>
@@ -24,7 +25,8 @@ function BurgerMenu({ onSearchClick, onMenuClick }: BurgerMenuProps) {
 
             {/* ini burger menu, iya, cuma muncul di mobile aja.... */}                          
             <Button className="bg-transparent" onClick={onMenuClick}>
-                <img src={BurgerMenuIcon} className="w-6 h-6"/>
+              
+                <img src={isOpen ? CloseIcon : BurgerMenuIcon} className="w-6 h-6"/>
             
             </Button>
 

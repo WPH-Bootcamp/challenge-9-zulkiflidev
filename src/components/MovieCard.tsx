@@ -24,13 +24,14 @@ function MovieCard( { movie, showDetails } : MovieCardProps) {
   const posterUrl =  `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
 
   // Tentukan kapan  info judul dan raing itu harus ditampilkan......
-  // initinya di home, rekomendasi --> itu ditampilkan  , tapi kalau icon awal di detail itu ga ditampilkan......
+  // initinya di home, rekomendasi --> itu ditampilkan , tapi kalau icon awal di detail itu ga ditampilkan......
   const shouldShowDetails = showDetails !== undefined ? showDetails : (!isDetailPage && !isSearchPage);
 
   return (
     <div>
         
-        <Card className="rounded-2xl overflow-hidden border-0 bg-transparent shadow-none">
+        <Card className="rounded-2xl overflow-hidden border-0 bg-transparent shadow-none 
+                         hover:scale-105 transition-transform cursor-pointer">
 
           <Link to={`/movie-detail-page/${movie.id}`}>
 

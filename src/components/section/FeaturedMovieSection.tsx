@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import VideoPlayIcon from '../../assets/icon-videoPlay.svg';
 
 import { usePopularMovies, useMovieDetails, useMovieTrailer  } from '../../hooks/useMovies';
-import { useFavoriteStore } from '../../store/useFavoriteStore';
+import { useMovieStore } from '../../store/movieStore';
 import { Button } from '../ui/button';
 import { Link } from 'react-router-dom';
 
@@ -16,6 +16,7 @@ import CalendarIcon from '../../assets/calendar-icon.svg';
 import HeartIcon from '../../assets/heart-icon.svg';
 import HeartIconFilled from '../../assets/heart-icon-filled.svg';
 import CloseIcon from '../../assets/close-icon.svg';
+import { motion } from 'framer-motion';
 
 //Interface untuk props
 interface FeaturedCardProps {
@@ -34,6 +35,7 @@ function FeaturedCard({ movieId }: FeaturedCardProps) {
           //error:popularError  
           } = usePopularMovies();
 
+          
   //Cegah NaN dengan memberikan default value 0 jika movieId tidak ada
   const numericMovieId = movieId ? Number(movieId) : 0;
   const { data:movieDetailsData, 
@@ -50,18 +52,23 @@ function FeaturedCard({ movieId }: FeaturedCardProps) {
   const randomIndex = useMemo(() => Math.floor(Math.random() * 19), []);
   const featuredMovie = movieId ? movieDetailsData : popularData?.results?.[randomIndex];
 
+  
+  
   // Sambungkan ke Zustand Store.....
-  const { addFavorite, removeFavorite, isFavorite: checkIsFavorite } = useFavoriteStore();
+  const { addFavorite, removeFavorite, isFavorite: checkIsFavorite } = useMovieStore();
   const isFavorite = featuredMovie ? checkIsFavorite(featuredMovie.id) : false;
 
   //==Movie Trailer, pakai "useMovieTrailer"      
   const { data:movieTrailerData } = useMovieTrailer(featuredMovie?.id || 0);       
+  
+
   
   // Cari video trailer dari YouTube
   //berikut ini, kita filter video, yang sekiaranya cocok buat video trailer,
   //tapi gak selalu  dapet video ya...
   const trailerVideo = movieTrailerData?.results?.find((vid: any) => vid.type === 'Trailer' 
                        && vid.site === 'YouTube') || movieTrailerData?.results?.[0];
+
   const trailerKey = trailerVideo?.key;
 
   if (isLoading || !isDataReady) 
@@ -81,8 +88,7 @@ function FeaturedCard({ movieId }: FeaturedCardProps) {
       removeFavorite(featuredMovie.id);
     } 
     else 
-      {
-
+    {
 
         // Simpan info id, judul, keterangan, rating ---> nanti dibuka di favorite page.....
         addFavorite({
@@ -94,23 +100,32 @@ function FeaturedCard({ movieId }: FeaturedCardProps) {
           poster_path: featuredMovie.poster_path
         });
     }
+
   };
+
+  
 
   const backdropUrl = `https://image.tmdb.org/t/p/original${featuredMovie?.backdrop_path}`;
 
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
         <div className="relative">
               <div className="">
                   <div className = "w-full relative border-0">
                     <img src = {backdropUrl}
                         alt = {featuredMovie.title}
-                        className = "w-full aspect-[3/4] object-cover object-[center_5%] md:aspect-video md:max-h-[110vh] md:object-top "/>
+                        className = "w-full aspect-[3/4] object-cover object-[center_5%]   md:aspect-video md:max-h-[110vh] md:object-top "/>
               
                     {/* Buat tepian bawah featured, biar bisa efek gelap */}
                     <div className="absolute border-0 bottom-0 left-0 w-full h-1/2 
                                     z-1 bg-linear-to-t from-black to-transparent"></div>
-                
+
+
+
                   </div> 
               </div>
 
@@ -151,20 +166,15 @@ function FeaturedCard({ movieId }: FeaturedCardProps) {
                           </div>    
 
                           <div className="hidden md:flex md:flex-row md:gap-4 md:justify-between md:items-center">
-                            <Button className="bg-primary-300 rounded-2xl h-12 w-56 cursor-pointer" 
-                                    
-                                    onClick={ 
-                                      
-                                      () => trailerKey && setShowTrailer(true)
-
-                                    }>
+                            <Button className={trailerKey ? "bg-primary-300 rounded-2xl h-12 w-56 cursor-pointer hover:scale-105 transition-transform" : "bg-neutral-500 rounded-2xl h-12 w-56 cursor-not-allowed"} 
+                                    disabled={!trailerKey}
+                                    onClick={() => setShowTrailer(true)}>
                                 
                                 <p className="text-md text-neutral-25 font-semibold">Watch Trailer</p>
                                 <img src={VideoPlayIcon} className="bg-transparent border-white w-6 h-6 ml-2"/>
                             
                             </Button>
-                            <Button className="bg-black rounded-full w-10 h-10 border-1 border-neutral-900 
-                                                flex justify-center items-center cursor-pointer"
+                            <Button className="bg-black rounded-full w-10 h-10 border-1 border-neutral-900 flex justify-center items-center cursor-pointer hover:scale-110 transition-transform"
                                     onClick={handleFavoriteClick}>
                             
                                 {isFavorite ? (
@@ -221,11 +231,9 @@ function FeaturedCard({ movieId }: FeaturedCardProps) {
                     <div className="flex flex-row w-full gap-8 md:hidden">
                       
                       {/* Video Trailer, KEY nya tinggal dibuka di youtube */}
-                      <Button className="bg-primary-300 rounded-2xl 
-                                         h-12  w-8/10 cursor-pointer" 
-                                         onClick={  
-                                            () => trailerKey && setShowTrailer(true)
-                                         }>
+                      <Button className={trailerKey ? "bg-primary-300 rounded-2xl h-12 w-8/10 cursor-pointer hover:scale-105 transition-transform" : "bg-neutral-500 rounded-2xl h-12 w-8/10 cursor-not-allowed"} 
+                              disabled={!trailerKey}
+                              onClick={() => setShowTrailer(true)}>
 
                           <p className="text-md text-neutral-25 font-semibold">Watch Trailer</p>
                           <img src={VideoPlayIcon} className="bg-transparent border-white w-6 h-6 ml-2"/>
@@ -233,8 +241,7 @@ function FeaturedCard({ movieId }: FeaturedCardProps) {
                       </Button>
 
                       {/* Button buat simpan favorite Movie */}
-                      <Button className="bg-black rounded-full w-10 h-10 border-1 border-neutral-900 flex justify-center
-                                          items-center cursor-pointer"
+                      <Button className="bg-black rounded-full w-10 h-10 border-1 border-neutral-900 flex justify-center items-center cursor-pointer hover:scale-110 transition-transform"
                               onClick={handleFavoriteClick}>
                           
                           {isFavorite ? (
@@ -252,9 +259,11 @@ function FeaturedCard({ movieId }: FeaturedCardProps) {
                     {/* Buat tampilkan rating */} 
                     <Card className="flex flex-col flex-1 justify-center 
                                       items-center gap-4 bg-black   border-neutral-800 border-1 py-4">
+
                         <img src={Star} className="w-8 h-8 pt-2 mt-2" />
                         <h3 className="text-neutral-300 text-sm">Rating</h3>
                         <p className="text-neutral-300 font-bold">{featuredMovie.vote_average.toFixed(1)}/10</p>
+
                     </Card>
 
                     <Card className="flex flex-col flex-1 justify-center items-center gap-4 bg-black 
@@ -298,8 +307,9 @@ function FeaturedCard({ movieId }: FeaturedCardProps) {
                     
                     <div className="w-full md:w-auto flex flex-col md:flex-row gap-4">
 
-                      <Button className="bg-primary-300 rounded-2xl h-12 w-full md:w-56 cursor-pointer" 
-                              onClick={() => trailerKey && setShowTrailer(true)}>
+                      <Button className={trailerKey ? "bg-primary-300 rounded-2xl h-12 w-full md:w-56 cursor-pointer hover:scale-105 transition-transform" : "bg-neutral-500 rounded-2xl h-12 w-full md:w-56 cursor-not-allowed"} 
+                              disabled={!trailerKey}
+                              onClick={() => setShowTrailer(true)}>
                         
                         <p className="text-md text-neutral-25 font-semibold">Watch Trailer</p>
                         
@@ -312,8 +322,8 @@ function FeaturedCard({ movieId }: FeaturedCardProps) {
                         {/* Link dari tiap poster movie diarahkan ke detail tiap movie jika diklik/ditap */}
                         <Link to={`/movie-detail-page/${featuredMovie.id}`}>       
 
-                          <Button className="bg-button-secondary/50 backdrop-blur-sm 
-                                            border-neutral-900 border-1 rounded-2xl h-12 w-full cursor-pointer">
+                          <Button className="bg-button-secondary/50 backdrop-blur-sm border-neutral-900 border-1 rounded-2xl 
+                                             h-12 w-full cursor-pointer hover:scale-105 transition-transform">
                             <p className="text-md text-neutral-25 font-semibold">See Detail</p>
                           </Button>
                       
@@ -332,7 +342,7 @@ function FeaturedCard({ movieId }: FeaturedCardProps) {
               yang mana key itu merupakan ID Video yang bisa disambungkan ke Youtube....
               
               yaitu:
-              https://youtube.com/watch?v=
+              https://youtube.com/watch?v=......(key)
           */}    
 
           
@@ -367,7 +377,7 @@ function FeaturedCard({ movieId }: FeaturedCardProps) {
               </div>
             </div>
           )}
-    </div>
+    </motion.div>
   )
 }
 

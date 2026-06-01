@@ -13,6 +13,7 @@ import { Carousel, CarouselContent,
 import { Button } from '../components/ui/button';
 
 import FeaturedMovieSection from '../components/section/FeaturedMovieSection'
+import { motion } from 'framer-motion';
 
 function Home() {
 
@@ -37,7 +38,8 @@ function Home() {
   if (popularIsLoading) return (
 
     <div className="min-h-screen flex items-center justify-center w-full">
-      <p className="text-neutral-400 text-display-lg">Loading...</p>
+      <div className="w-12 h-12 border-4 border-primary-300 border-t-transparent 
+                      rounded-full animate-spin"></div>
     </div>
   
   );
@@ -57,7 +59,12 @@ function Home() {
   console.log("nowPlayingHasNextPage=", nowPlayingHasNextPage);
   
   return (
-      <div className="w-full">
+      <motion.div 
+        className="w-full"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+      >
 
         {/* ini untuk hero section nya - featured image*/}
         <div className="relative -mt-24">
@@ -68,33 +75,29 @@ function Home() {
         </div>
 
         {/* ini popular movies - horizontal view */}
-        <div className="relative mt-48 md:mt-0">
+        <div className="relative mt-45 md:mt-0">
           
-          <div className="text-display-md font-bold text-neutral-25 px-4 md:px-25 pb-4 md:pt-16">
+          <div className="text-display-md font-bold text-neutral-25 px-4
+                          md:px-25 pb-4 md:pt-16">
            
               <h2>Trending Now</h2>
           </div>
 
           <div className="relative overflow-hidden">
-              <Carousel className="w-full" opts={{ align: "center" }}>
-                  
+              <Carousel className="w-full" opts={{ align: "center" }}>                  
                   <CarouselContent className="px-4 md:px-25">
                     {
-                        popularData?.results?.map((movieItem: Movie) => (
-                          
+                        popularData?.results?.map((movieItem: Movie) => (                          
                           <CarouselItem key={movieItem.id} 
                                        className="basis-1/2 sm:basis-1/3  md:basis-1/4 lg:basis-[18%]">
                            
-                            <MovieCard key={movieItem.id} movie={movieItem} />
-                          
+                            <MovieCard key={movieItem.id} movie={movieItem} />                          
                           </CarouselItem>
                         )
                     )}
-                  </CarouselContent>
-                  
+                  </CarouselContent>                  
                   <CarouselPrevious className="left-10 peer/prev disabled:hidden z-10"/>
                   <CarouselNext className="right-10 peer/next disabled:hidden z-10"/>
-
               </Carousel>
 
             <div className="absolute left-0 top-0 h-full w-12  md:w-56 bg-gradient-to-r from-black 
@@ -123,7 +126,14 @@ function Home() {
               {nowPlayingData?.pages?.
                 flatMap(p => p.results.slice(5))?.map((movieItem) => 
                     (
-                        <MovieCard key={movieItem.id} movie={movieItem} />
+                        <motion.div 
+                          key={movieItem.id}
+                          initial={{ opacity: 0, scale: 0.9 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ duration: 0.4 }}
+                        >
+                          <MovieCard movie={movieItem} />
+                        </motion.div>
                     )
               )}
 
@@ -135,11 +145,14 @@ function Home() {
                          justify-center items-center py-8 -mt-8 pb-12">
               {nowPlayingHasNextPage && (
                 
-                <Button className="text-md z-20"
+                <Button className="text-md z-20 hover:scale-105 transition-transform"
                         onClick={()=> nowPlayingFetchNextPage()}
                         disabled={nowPlayingIsFetchingNextPage}>
 
-                     {nowPlayingIsFetchingNextPage ? "Loading..." : "Load More"}
+                     {nowPlayingIsFetchingNextPage ? (
+                        <div className="w-6 h-6 border-4 border-white border-t-transparent 
+                                        rounded-full animate-spin"></div>
+                     ) : "Load More"}
 
                 </Button>
 
@@ -156,7 +169,7 @@ function Home() {
         </div>
 
         
-    </div>
+    </motion.div>
   )
 }
 

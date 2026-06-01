@@ -13,6 +13,9 @@ const queryClient = new QueryClient({
           // TODO: Configure default query options
           // Examples: refetchOnWindowFocus, retry, staleTime, etc.
 
+          refetchOnWindowFocus: false,
+          retry: false,
+
 
     },
   },
