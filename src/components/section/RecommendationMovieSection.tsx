@@ -29,6 +29,7 @@ function RecommendationMovie({ movieId }: RecommendationMovieProps) {
 
   return (
     <div className="mt-10 md:px-25 pb-24">
+      
       <h2 className="px-4 md:px-0 text-display-md font-bold pb-4 text-neutral-25">        
         Recommendations
       </h2>

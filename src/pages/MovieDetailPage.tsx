@@ -4,6 +4,7 @@ import FeaturedMovieSection from '@/components/section/FeaturedMovieSection'
 import { useMovieDetails, useMovieCasts  } from '../hooks/useMovies';
 import RecommendationMovie from '../components/section/RecommendationMovieSection';
 import type { Cast  } from '../types/cast';
+import { motion } from 'framer-motion';
 
 function MovieDetailPage() {
   // Menangkap parameter 'id' dari URL
@@ -38,7 +39,11 @@ function MovieDetailPage() {
 
 
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+    >
       <div className="relative -mt-24 flex flex-col gap-8">
 
           <FeaturedMovieSection movieId={id} />
@@ -92,7 +97,7 @@ function MovieDetailPage() {
           <RecommendationMovie movieId={numericMovieId} />
         
       </div>
-    </div>
+    </motion.div>
   )
 }
 

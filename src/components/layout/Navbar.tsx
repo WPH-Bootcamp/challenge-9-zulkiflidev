@@ -78,6 +78,7 @@ function Navbar() {
               <BurgerMenu 
                 onSearchClick={() => setIsMobileSearchActive(true)} 
                 onMenuClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
+                isOpen={isMobileMenuOpen}
               />
             
             </div>
@@ -90,25 +91,14 @@ function Navbar() {
                               border-t border-neutral-800 shadow-lg">
                   
                   <Link to="/" onClick={() => setIsMobileMenuOpen(false)} 
-                               className="text-white text-lg font-medium p-2 
-                                          hover:bg-neutral-800 rounded-lg">
-                      Home
+                               className="block text-white text-lg font-medium p-2 
+                                          hover:bg-neutral-800 rounded-lg">Home
                   </Link>
                   
-                  <div className="text-white text-lg 
-                                  font-medium p-2 hover:bg-neutral-800 
-                                  rounded-lg cursor-pointer">
-
-                    
-                      <Link to="/favorite" onClick={() => setIsMobileMenuOpen(false)} 
-                                className="text-white text-lg font-medium p-2 
-                                            hover:bg-neutral-800 rounded-lg">
-                        Favorites
-                      </Link>
-
-
-                      
-                  </div>
+                  <Link to="/favorite" onClick={() => setIsMobileMenuOpen(false)} 
+                            className="block text-white text-lg font-medium p-2 
+                                       hover:bg-neutral-800 rounded-lg">Favorites
+                  </Link>
 
               </div>
             )}
